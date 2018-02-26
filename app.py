@@ -1,10 +1,15 @@
 
 import random
 
-from flask import Flask
-from flask import request
-from flask import render_template
-from flask import Markup
+from flask import (
+    Flask,
+    request,
+    render_template,
+    Markup,
+    redirect,
+    abort,
+    url_for
+)
 
 
 # init Flask instance
@@ -41,6 +46,24 @@ def get_or_post():
     elif request.method == 'POST':
         return 'A POST request was made..'
 
+# access GET params
+# http://localhost:5000/get-params?x=1&y=2
+@app.route('/get-params', methods=['GET'])
+def get_params():
+    param_x = int(request.args.get('x'))
+    param_y = int(request.args.get('y'))
+    summed = str(param_x + param_y)
+    return 'Addition of GET params: %s + %s = %s' % (param_x, param_y, summed)
+
+# access POST params
+# curl -X POST -F 'x=2' -F 'y=3' http://localhost:5000/post-params
+@app.route('/post-params', methods=['POST'])
+def post_params():
+    param_x = int(request.form['x'])
+    param_y = int(request.form['y'])
+    summed = str(param_x + param_y)
+    return 'Addition of POST params: %s + %s = %s' % (param_x, param_y, summed)
+
 # dynamically rendered template
 @app.route('/dynamic-hello/')
 @app.route('/dynamic-hello/<name>')
@@ -53,6 +76,27 @@ def dynamic_markup():
     rand = random.randint(1, 100)
     markup = Markup('<span style="color: green">%s</span>') % str(rand)
     return render_template('dynamic-markup.html', markup=markup)
+
+# route to be redirected from
+@app.route('/redirect-from')
+def redirect_from():
+    return redirect(url_for('redirect_to'))
+
+# route to be redirected to
+@app.route('/redirect-to')
+def redirect_to():
+    return 'You have been redirected..'
+
+# abort and send status code
+@app.route('/res-code')
+def res_code():
+    abort(401)
+    return 'Never got here..'
+
+# custom error page (also shows how to send a static file)
+@app.errorhandler(401)
+def unauthorized(error):
+    return app.send_static_file('unauthorized.html'), 401
 
 ####################################################
 
