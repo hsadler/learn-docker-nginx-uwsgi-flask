@@ -1,3 +1,8 @@
 
 - get to know the flask framework (http://flask.pocoo.org/)
-- deploy server in a prod environment
+    - deployment options (http://flask.pocoo.org/docs/0.12/deploying/#deployment)
+    - flask extensions (http://flask.pocoo.org/docs/0.12/extensions/#extensions)
+
+- deploy to a web server
+    - nginx
+    - deploy script
