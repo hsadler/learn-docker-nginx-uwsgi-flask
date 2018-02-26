@@ -1,6 +1,7 @@
 
 from flask import Flask
 from flask import request
+from flask import render_template
 
 
 # init Flask instance
@@ -36,6 +37,12 @@ def get_or_post():
         return 'A GET request was made..'
     elif request.method == 'POST':
         return 'A POST request was made..'
+
+# serve dynamically rendered template
+@app.route('/dynamic-hello/')
+@app.route('/dynamic-hello/<name>')
+def dynamic_hello(name=None):
+    return render_template('dynamic-hello.html', name=name)
 
 ####################################################
 
