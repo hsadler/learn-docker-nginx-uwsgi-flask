@@ -8,7 +8,9 @@ from flask import (
     Markup,
     redirect,
     abort,
-    url_for
+    url_for,
+    session,
+    escape
 )
 
 
@@ -97,6 +99,48 @@ def res_code():
 @app.errorhandler(401)
 def unauthorized(error):
     return app.send_static_file('unauthorized.html'), 401
+
+# sessions
+@app.route('/check-session')
+def check_session():
+    if 'username' in session:
+        return 'Logged in as %s' % escape(session['username'])
+    return 'You are not logged in'
+
+# login with username and set on session
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        session['username'] = request.form['username']
+        return redirect(url_for('check_session'))
+    return '''
+        <form method="post">
+            <p><input type=text name=username>
+            <p><input type=submit value=Login>
+        </form>
+    '''
+
+# logout and remove username from session
+@app.route('/logout')
+def logout():
+    # remove the username from the session if it's there
+    session.pop('username', None)
+    return redirect(url_for('check_session'))
+
+# set the secret key for sessions
+app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
+
+# note: generate a good key with:
+# import os
+# os.urandom(24)
+
+# logging example
+@app.route('/logging')
+def logging():
+    app.logger.debug('A value for debugging')
+    app.logger.warning('A warning occurred (%d apples)', 42)
+    app.logger.error('An error occurred')
+    return 'There are now logs in the CLI'
 
 ####################################################
 
