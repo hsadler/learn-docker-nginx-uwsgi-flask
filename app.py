@@ -1,7 +1,10 @@
 
+import random
+
 from flask import Flask
 from flask import request
 from flask import render_template
+from flask import Markup
 
 
 # init Flask instance
@@ -38,11 +41,18 @@ def get_or_post():
     elif request.method == 'POST':
         return 'A POST request was made..'
 
-# serve dynamically rendered template
+# dynamically rendered template
 @app.route('/dynamic-hello/')
 @app.route('/dynamic-hello/<name>')
 def dynamic_hello(name=None):
     return render_template('dynamic-hello.html', name=name)
+
+# template with dynamic markup
+@app.route('/dynamic-markup')
+def dynamic_markup():
+    rand = random.randint(1, 100)
+    markup = Markup('<span style="color: green">%s</span>') % str(rand)
+    return render_template('dynamic-markup.html', markup=markup)
 
 ####################################################
 
