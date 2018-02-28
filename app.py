@@ -147,4 +147,4 @@ def logging():
 
 # run the app if executed as main file to python interpreter
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', port=80)

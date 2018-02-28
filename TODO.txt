@@ -3,6 +3,8 @@
     - deployment options (http://flask.pocoo.org/docs/0.12/deploying/#deployment)
     - flask extensions (http://flask.pocoo.org/docs/0.12/extensions/#extensions)
 
+- use docker for os environment
+
 - deploy to a web server
     - nginx
     - deploy script
