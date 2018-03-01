@@ -14,5 +14,6 @@ RUN pip install -r requirements.txt
 # make port 80 available to the world outside this container
 EXPOSE 80
 
+# NOTE: WON'T NEED TO DO THIS WHEN HANDLED BY NGINX
 # run app.py when the container launches
-CMD ["python", "app.py"]
+CMD ["python", "flaskapp.py"]

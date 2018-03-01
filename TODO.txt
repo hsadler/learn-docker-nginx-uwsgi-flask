@@ -6,5 +6,7 @@
 - use docker for os environment
 
 - deploy to a web server
+    - docker ubuntu
     - nginx
-    - deploy script
+    - wsgi
+    - flaskapp.py
