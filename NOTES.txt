@@ -10,3 +10,8 @@ docker run -p 4000:80 flask-server
 
 // view the URL served by the container
 http://localhost:4000
+
+
+
+// uwsgi
+uwsgi --socket 0.0.0.0:5000 --protocol=http -w wsgi:app
