@@ -1,21 +1,21 @@
 
 # parent image
-FROM alpine
+FROM alpine:3.7
 
 # Copy python requirements file
 COPY requirements.txt /tmp/requirements.txt
 
-# OS installs, pip installs, etc.
+# OS installs, pip installs, etc. (https://pkgs.alpinelinux.org/packages)
 RUN apk add --no-cache \
-    python3 \
-    bash \
-    nginx \
-    uwsgi \
-    uwsgi-python3 \
-    supervisor && \
+    python3=3.6.3-r9 \
+    bash=4.4.19-r1 \
+    nginx=1.12.2-r3 \
+    uwsgi=2.0.16-r0 \
+    uwsgi-python3=2.0.16-r0 \
+    supervisor=3.3.3-r1 && \
     python3 -m ensurepip && \
     rm -r /usr/lib/python*/ensurepip && \
-    pip3 install --upgrade pip setuptools && \
+    pip3 install pip setuptools==38.5.1 && \
     pip3 install -r /tmp/requirements.txt && \
     rm /etc/nginx/conf.d/default.conf && \
     rm -r /root/.cache
