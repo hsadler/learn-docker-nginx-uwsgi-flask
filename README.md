@@ -26,11 +26,11 @@ source prod.sh
 Dev server:
 
 ```sh
-[http://localhost:4000]
+http://localhost:4000
 ```
 
 Prod server:
 
 ```sh
-[http://localhost]
+http://localhost
 ```
